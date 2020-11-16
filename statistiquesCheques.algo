@@ -1,0 +1,87 @@
+#Programme qui demande à l'utilisateur une série de chèque avec leur montant et leurs numéros.
+Algo statistiques_cheques
+
+Variable numero_cheque : entier <- 0
+Variable montant_cheque : réel <- 0.0
+Variable total_montant_cheque : réel  <- 0.0
+Variable nombre_cheques : entier <- 0 
+Variable total_nombre_cheque : entier <- 0
+
+Constante SORTIR : entier <- 0
+
+Constante PALIER : entier <- 200
+Variable nombre_cheque_inferieur_palier : entier
+Variable total_montant_cheque_inferieur_palier : réel
+Variable nombre_cheque_sup_ou_egal_palier : réel
+Variable total_montant_cheque_sup_ou_egal_palier : réel
+
+Variable montant_mini : réel <- #Valeur maximum d'un réel ?
+Variable numero_montant_mini : entier <- 0
+Variable montant_maxi : réel <- 0.0
+Variable numero_montant_maxi : entier <- 0
+
+Variable moyenne_montants : réel <- 0.0
+
+Début 
+
+	#Bloc de saisie
+	#Saisie du numéro de chèque  avec la possibilité de sortir du programme.
+	Répéter
+		numero_cheque <- saisir ("Saisissez un numéro de chèque valide ou " &SORTIR &" pour quitter le programme")
+		
+		#Saisie du montant du chèque avec un contrôle de saisie
+		montant_cheque <- saisir ("Saisissez le montant du chèque. Le montant doit être strictement positif")
+		TantQue montant_cheque < 0
+			écrire ("Mauvaise saisie : le montant doit être strictement positif")
+			montant_cheque <- saisir ()
+		FTq	
+		#nombre total de cheque et total montant
+		nombre_cheques <- nombre_cheques + 1
+		total_montant_cheque <- total_montant_cheque + montant_cheque 		
+		
+		#Nombre de chèques et montant total supérieur et inférieur au palier
+		Si montant_cheque < PALIER Alors
+			nombre_cheque_inferieur_palier <- nombre_cheque_inferieur_palier + 1
+			total_montant_cheque_inferieur_palier <- total_montant_cheque_inferieur_palier + montant_cheque
+		Sinon
+			nombre_cheque_sup_ou_egal_palier <- nombre_cheque_sup_ou_egal_palier + 1
+			total_montant_cheque_sup_ou_egal_palier <- total_montant_cheque_sup_ou_egal_palier + montant_cheque
+		FSi
+		
+		#Récupération des chèques au montant maximum et minimum et leurs numéros associés
+		Si montant_cheque > montant_maxi Alors
+			montant_maxi <- montant_cheque
+			numero_montant_maxi <- numero_cheque
+		FSi
+		Si  montant_cheque < montant_mini Alors
+			montant_mini <- montant_cheque
+			numero_montant_mini <- numero_cheque
+		FSi
+	
+		
+
+	TantQue numéro_cheque <> SORTIR FRépéter
+	
+	#Au moins un chèque doit avoir été saisi
+	Si nombre_cheques = 0 Alors
+		écrire ("Aucun chèque n'a été saisi")
+	Sinon
+		#calcul de la moyenne des montants saisis
+		moyenne_montants <- total_montant_cheque / nombre_cheques
+	
+		#Affichage
+		écrire("Nombre de chèques introduits : "                                   		   & nombre_cheques)
+		écrire("Montant total des chèques : "                                      		   & total_montant_cheque)
+		écrire("Moyenne des montants : "                                           		   & moyenne_montants)
+		écrire("Nombre de chèques dont le montant est inférieur à 200€ : "         		   & nombre_cheque_inferieur_palier)
+		écrire("Montant total des chèques dont le montant est inférieur à 200€ : " 		   & total_montant_cheque_inferieur_palier)
+		écrire("Nombre de chèques dont le montant est supérieur ou égal à 200€ : " 		   & nombre_cheque_sup_ou_egal_palier)
+		écrire("Montant total des chèques dont le montant est supérieur ou égal à 200€ : " & total_montant_cheque_sup_ou_egal_palier)
+		écrire("Numéro du chèque dont le montant est le plus petit : "             		   & numero_montant_mini)
+		écrire("Montant du plus petit chèque : "                                   		   & montant_mini)
+		écrire("Numéro du chèque dont le montant est le plus grand : "             		   & numero_montant_maxi)
+		écrire("Montant du chèque le plus grand : "                                		   & montant_maxi)
+	FSi
+	
+	
+Fin

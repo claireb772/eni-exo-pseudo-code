@@ -1,0 +1,28 @@
+Algo moyenne_des_notes
+
+#Déclaration
+Variable nombre_de_notes : entier <- 0
+Variable moyenne_des_notes : réel <-0.0
+Variable demande_saisie : réel <- 0.0
+Variable addition_notes : réel <- 0.0
+
+Début
+#bloc de saisie
+	nombre_de_notes <- saisir("Entrez le nombre de notes")
+	Si nombre_de_notes < 1
+		écrire ("Entrez un plus grand nombre de notes")
+	Sinon
+		Pour i<- 1 à nombre_de_notes
+			demande_saisie <- ("Entrez une note : ")
+			addition_notes <- addition_notes + demande_saisie
+		FPour
+	FSi 
+			
+#traitement & calcul
+		moyenne_des_notes <- addition_notes / nombre_de_notes
+
+	
+#bloc d'affichage
+				écrire ("La moyenne des " & nombre_de_notes & " notes est " & moyenne_des_notes)
+
+Fin 

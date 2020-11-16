@@ -1,0 +1,35 @@
+#Programme qui calcule et affiche les nombres premiers compris entre 0 et un nombre pallier déterminé par l'utilisateur.
+Algo nombres_Premiers
+Variable nombre_palier : entier <-1000
+
+
+Début
+	#bloc de saisie pour permettre à l'utilisateur de mettre un nombre pallier.
+	Répéter
+		nombre_palier <- saisir ("Saisissez un nombre entier et positif jusqu'où vous souhaitez avoir la liste des nombres premiers")
+	TantQue nombre_palier <0
+
+	#bloc de traitement et calculs
+	Pour i <- 0 à nombre_palier
+		Si estPremier (i) Alors #appel une fonction qui détermine les nombres premiers.
+			écrireSRC (i)
+		FSi
+	FPour
+Fin
+
+#Détermine si un nombre est premier ou non.
+#@Param nombre entier.
+#Retourne vrai si le nombre est premier, faux sinon.
+Fonction estPremier (nombre : entier) Retourne booléen
+Variable resultat : booléen <- VRAI
+Début
+	Si nombre = 0 ou nombre = 1 Alors
+		resultat <- FAUX
+	FSi
+	Pour i <-1 à nombre/2
+		Si nombre mod i = 0 Alors
+			resultat <- FAUX
+		FSi
+	FPour
+	Retourne resultat
+Fin  

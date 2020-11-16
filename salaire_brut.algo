@@ -1,0 +1,17 @@
+Fonction salaire_brut (nombre_heures : réel, HEURES_NORMALES : réel, taux_horaire : réel, HEURES_MAJORE_50 : réel) Retourne réel
+
+Début
+	Si nombre_heures <= HEURES_NORMALES Alors
+	 salaire_brut <- nombre_heures * taux_horaire
+		Sinon Si
+			nombre_heures <= HEURES_MAJORE_50 Alors
+				nombre_heures_majo_50 <- nombre_heures - HEURES_NORMALES
+				salaire_brut <- (HEURES_NORMALES * taux_horaire) + nombre_heures_majo_50 * MAJORATION_50
+			Sinon
+				nombre_heures_majo_50 <- nombre_heures - HEURES_NORMALES
+				nombre_heures_majo_60 <- nombre_heures - nombre_heures_majo_50
+				salaire_brut <- (HEURES_NORMALES * taux_horaire) + (nombre_heures_majo_50 * MAJORATION_50)) + ( nombre_heures_majo_60 * taux_horaire * MAJORATION_60))
+		FSi
+	FSi	
+	Retourne salaire_brut
+Fin

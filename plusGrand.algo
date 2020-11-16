@@ -1,0 +1,13 @@
+Fonction (a : entier, b : entier) Retourne entier
+
+Variable le_plus_grand
+
+Début
+		Si a > b Alors
+		le_plus_grand <- a
+		Sinon
+		le_plus_grand <- b
+		
+		Retourne le_plus_grand
+Fin
+

@@ -1,0 +1,46 @@
+Algo nombreCacheCache
+
+#Déclaration
+Constante NB_MYSTERE : entier <- aléa(1.100) #initialisation aléatoire
+
+Variable saisie : entier <- 1
+
+Début
+	#amorçage
+	saisie <- saisir("A quel nombre entre 1 et 100 je pense ?")
+	#Condition
+	TantQue saisie <> NB_MYSTERE
+		#traitement
+		Si
+		saisie > NB_MYSTERE Alors
+			écrire ("C'est moins !")
+		Sinon
+			écrire ("C'est plus !")
+		FSi				
+		#relance
+		saisie <- saisir("Vous avez le droit à un autre essai !")
+	FTq
+	écrire ("Bravo ! Vous avez trouvé !")
+Fin 
+
+#### autre version ####
+
+#amorçage
+Variable trouvé: booléen <- FAUX
+Début
+	#Condition
+	TantQue trouve <> VRAI
+		saisie <- saisir("A quel nombre entre 1 et 100 je pense ?")
+		#traitement
+		Si
+		saisie > NB_MYSTERE Alors
+			écrire ("C'est moins !")
+		Sinon Si
+		saisie < NB_MYSTERE Alors
+			écrire ("C'est plus !")
+		Sinon
+			écrire ("Bravo ! Vous avez trouvé !")
+			trouvé <- VRAI
+		FSi				
+	FTq
+Fin

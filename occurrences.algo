@@ -1,0 +1,34 @@
+Algo occurences
+
+#déclaration des variables et constantes
+
+Variable saisie : entier <-0
+Constante TAILLE : entier <-10
+Variable tableauNombreOccurences entier [TAILLE]
+
+Début
+	#initialisation du tableau 
+	Pour i<-0 à TAILLE - 1
+		tableauNombreOccurences [i] <-0
+	FPour
+	
+	Répéter
+		#contrôle de la saisie de l'utilisateur
+		Répéter
+			écrire ("Entrez un chiffre entre 0 et 9 (-1 pour sortir)")
+			saisie <-()
+			Si saisie <-1 ou saisie > 9 Alors
+				écrire ("erreur de saisie")
+		TantQue saisie < -1 ou > 9 FRépéter
+		Si saisie <> - 1 Alors
+			#alimentation du tableau
+			tableauNombreOccurences [saisie] <- tableauNombreOccurences [saisie] + 1
+		FSi
+	TantQue saisie <> -1 FRépéter
+	
+	#affichage résultats de chaque cellules de mon tableau
+	Pour i<-0  à TAILLE -1
+		écrire ("Nombre de " &i " : " &tableauNombreOccurences[i])
+
+Fin
+

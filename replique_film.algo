@@ -1,0 +1,41 @@
+Algo replique_de_film
+
+#déclaration
+Constante REPLIQUE_CITE_DE_LA_PEUR : texte <-"Attention, c'est une véritable boucherie"
+Constante REPLIQUE_JAMES_BOND : texte <-"Je m'appelle Bond, James Bond"
+Constante REPLIQUE_LONG_FLEUVE_TRANQUILLE : texte <-"C'est lundi, c'est raviolis"
+Constante REPLIQUE_STAR_WARS : texte <-"Luke, je suis ton père"
+Constante MESSAGE_FIN : texte <- "Bye bye !"
+Constante MESSAGE_ERREUR : texte <- "Saisie incorrecte"
+Constante CITE_DE_LA_PEUR : entier <- 1
+Constante JAMES_BOND : entier <- 2
+Constante LONG_FLEUVE_TRANQUILLE : entier <- 3
+Constante STAR_WARS : entier <- 4
+Constante QUITTER : entier <- 5
+Variable saisie : entier <- 1
+Variable replique : texte <- ""
+
+#début du programme
+Début
+	#bloc de saisie
+	écrire (CITE_DE_LA_PEUR &"-Une réplique de la cité de la peur")
+	écrire (JAMES_BOND &"-Une réplique de James Bond")
+	écrire (LONG_FLEUVE_TRANQUILLE &"-Une réplique de la vie est long fleuve tranquille")
+	écrire (STAR_WARS &"-Une réplique de Star Wars")
+	écrire (QUITTER &"- Quitter cette magnifique application !")
+	
+	Répéter
+	saisie <- saisie("Tapez le chiffre de la réplique ou quitter avec "& QUITTER)
+	#traitement et calculs
+		Selon saisie
+			cas CITE_DE_LA_PEUR : replique <- REPLIQUE_CITE_DE_LA_PEUR
+			cas JAMES_BOND : replique <- REPLIQUE_JAMES_BOND
+			cas LONG_FLEUVE_TRANQUILLE : replique <- REPLIQUE_LONG_FLEUVE_TRANQUILLE
+			cas STAR_WARS : replique <- REPLIQUE_STAR_WARS
+			cas QUITTER : replique <- MESSAGE_FIN
+			autre : replique <- MESSAGE_ERREUR
+		#bloc d'affichage
+		écrire (replique)
+		FSelon
+	TantQue saisie<>5 FRépéter
+Fin

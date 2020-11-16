@@ -1,0 +1,19 @@
+Algo multiple_de_trois
+
+Variable nombre_saisi : entier <-3
+
+
+	
+Début
+	#bloc de saisie
+	nombre_saisi <- saisir ("Entrez un multiple de trois")
+
+	TantQue nombre_saisi mod 3 <>0
+		écrire ("Erreur " & nombre_saisi & " n'est pas un multiple de 3")
+		#relance
+		nombre_saisi <- saisir
+	FTq
+	
+		écrire ("OK : " & nombre_saisi & " est un multiple de trois")
+	
+Fin

@@ -1,0 +1,28 @@
+Algo nombre_choisi
+
+Variable min : entier <-1
+Variable nombre_tentative : entier <-0
+Variable max : entier <- 100
+Variable réponse : caractère
+Variable SaisieOk : booléen
+
+Début
+ Saisir <- ("Choisir un nombre compris entre" &min & " et " &max & ", puis appuyer sur une touche")
+ 
+ Répéter
+ valeur <- aléa (min, max)
+ écrire ("Je tente" & valeur & ", est-ce plus ou moins ou est-ce le nombre (+/-/=)?")
+ nombre_tentative <- nombre_tentative + 1
+	Répéter
+		saisieOK<- VRAI
+		reponse <- saisir
+		Selon reponse
+			cas '+' : min <- valeur
+			cas '-' : max <- valeur
+			cas '=' : écrire ("Super ! J'ai réussi en" & nombre_tentative & " tentatives")
+				écrire ("Erreur de saisie. Saisissez + - ou =")
+		FSelon
+	TantQue non SaisieOk FRépéter
+TantQue reponse <> '=' FRépéter
+Fin
+

@@ -1,0 +1,29 @@
+#Programme qui crée un tableau et le rempli de caractères aléatoires
+Algo Matrix
+#bloc de déclaration
+Constante HAUTEUR : entier <- 20
+Constante LARGEUR : entier <- 30
+Variable i, j : entier
+Variable tableau_Matrix : caractère [HAUTEUR][LARGEUR]
+
+
+
+Début
+
+	Pour i <- 0 à HAUTEUR - 1
+		Pour j <- 0 à LARGEUR - 1
+			tableau_Matrix [i][j] <- aléa('', '²')
+		FPour
+	FPour
+	
+	Pour j<- 0 à HAUTEUR - 1
+		Pour i <- 0 à LARGEUR - 1
+			écrireSRC(tableau_Matrix[j][i])
+		FPour
+		écrire()
+	FPour
+Fin
+
+
+
+

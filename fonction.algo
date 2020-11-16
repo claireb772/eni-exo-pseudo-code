@@ -1,0 +1,85 @@
+Algo calculatrice
+Constante ADDITION : entier <- 1
+Constante MULTIPLICATION : entier <- 2
+Constante SOUSTRACTION : entier <- 3
+Constante DIVISION : entier <- 4
+
+Variable total : réel <- 0.0
+
+
+
+Début
+
+#saisie
+	Répéter
+	écrire ("Rentrez un premier chiffre")
+	nombre1 <- saisir()
+	Si nombre1 <0
+		écrire ("erreur de saisie, rentrez un nombre positif")
+	FSi
+	
+	écrire ("Rentrez un deuxieme chiffre")
+	Si nombre2 <0
+	nombre2 <- saisir()
+	FSi
+	TantQue nombre1 <0 et nombre2<0 FRépéter
+
+	Répéter
+	écrire ("Saisissez une opération")
+	écrire (&ADDITION & "-addition")
+	écrire (&MULTIPLICATION & "-multiplication")
+	écrire (&SOUSTRACTION & "-soustraction")
+	écrire (&DIVISION & "-division")
+	saisie <- saisir()
+	TantQue saisie <> ADDITION ou saisie <> MULTIPLICATION ou saisie <> SOUSTRACTION ou saisie <> DIVISION FRépéter
+	
+	
+
+#traitement et calcul
+Selon choix
+	cas ADDITION
+	
+	cas MULTIPLICATION
+	
+	cas SOUSTRACTION
+	
+	cas DIVISION
+	
+	cas autre : 
+
+
+
+
+Fin
+
+
+Fonction addition (a: réel, b : réel) Retourne réel
+Variable d : réel <-0.0
+Début
+	d <- a + b
+	Retourne d
+Fin
+
+Fonction multiplication (a: réel, b: réel) Retourne réel
+Variable d : réel <- 0.0
+Début
+	d<- a*b
+	Retourne d
+Fin
+
+Fonction soustraction (a: réel, b: réel) Retourne réel
+Variable d : réel <- 0.0
+Début
+	d<- a-b
+	Retourne d
+Fin
+
+Fonction division (a: réel, b: réel) Retourne réel
+Variable d : réel <- 0.0
+Début
+	Si b <>0 Alors
+	d<- a/b
+	Sinon
+		écrire ("erreur de saisie")
+	Retourne d
+Fin

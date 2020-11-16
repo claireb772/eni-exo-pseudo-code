@@ -1,0 +1,69 @@
+#Saisie des notes, stockage dans un tableau (pas plus de 20) et calcul de la moyenne
+Algo moyenne_des_notes_2
+
+#Déclaration
+Constante NOTE_STOP : entier <- -1
+Variable tab_moyenne réel [TAILLE]
+Constante TAILLE : entier <- 20
+Variable moyenne_des_notes : réel <-0.0
+Variable addition_notes : réel <- 0.0
+Variable nombre_de_notes : réel <- 0.0
+Variable saisie_de_notes : réel <- 0.0
+Variable bonnes_notes : réel <- 0.0
+Variable pourcentage_bonnes_notes : réel <- 0.0
+
+
+
+Début
+	#initialisation du tableau
+	Pour i<-0 à TAILLE -1
+			tab_moyenne [i] <-0.0
+	FPour
+
+	#amorçage de la boucle Tant que
+	saisie_de_notes <- saisir("Saisissez une note ou " & NOTE_STOP & " pour sortir")
+	
+	#Condition
+	TantQue saisie_de_notes <> -1 et nombre_de_notes < TAILLE
+	
+		#traitement avec alimentation du tableau 
+		tab_moyenne [nombre_de_notes] <- saisie_de_notes
+		nombre_de_notes <- nombre_de_notes + 1	
+		
+		#récupération des notes supérieures ou égales à 10
+		Si
+			saisie_de_notes >= 10 Alors 
+			bonnes_notes <- bonnes_notes + 1
+		FSi
+		
+		#relance
+		saisie_de_notes <- saisir ()
+	FTq
+	
+	Si nombre_de_notes > TAILLE Alors
+		écrire ("Vous ne pouvez rentrer que 20 notes")
+	
+		Si non nombre_de_notes = 0 Alors
+			#traitement & calcul et récupération des notes du tableau
+			Pour i <-0 à nombre_de_notes - 1
+				addition_notes <- addition_notes + tab_moyenne[i]
+			FPour
+		FSi
+		moyenne_des_notes <- addition_notes / nombre_de_notes 
+		pourcentage_bonnes_notes <- bonnes_notes / nombre_de_notes * 100
+			
+		#bloc d'affichage
+		#affiche des notes du tableau
+		Pour i<-0 à TAILLE - 1
+			écrire ("La liste des notes :")
+				Si i+1 < TAILLE - 1 Alors
+					écrire (&saisie_de_notes ", ")
+				Sinon	
+					écrire (")")	
+				FSi
+		écrire ("La moyenne des " & nombre_de_notes & " notes est " & moyenne_des_notes)
+		écrire ("Il y a " & pourcentage_bonnes_notes & " % de notes supérieures ou égales à 10") 
+	Sinon
+		écrire ("aucune note saisie")
+	FSi
+Fin 

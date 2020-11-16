@@ -1,0 +1,68 @@
+Algo temps_de_cuisson
+#Affiche le temps de cuisson d'une viande en fonction d'un type de viande, du mode de cuisson et du poid de la viande
+
+
+#bloc de déclaration
+Variable typeViande : entier <- 1
+Variable modeCuisson : texte <- ""
+Variable poidsViande : entier 
+Variable coef : réel
+
+Constante SECONDE : entier <- 60
+Constante BOEUF : entier <-1
+Constante AGNEAU : entier <-2
+
+Début
+	#bloc de saisie
+	écrire ("Quel est votre type de viande")
+	écrire ( &BOEUF & "- Boeuf")
+	écrire ( &AGNEAU & "-Agneau")
+	typeViande <- saisir()
+	poidsViande <- saisir("Quel est le poids en grammme de votre viande ?")
+	modeCuisson <- saisir("Quelle cuisson souhaitez-vous ? (Bleu, A point, Bien cuit)") 
+	
+	#traitement et calculs
+	coef <-calculCoeff(modeCuisson, typeViande)		
+	
+	Si coef <>0 Alors
+	temps_de_cuisson = coef * poidsViande * SECONDE
+	FSi		
+
+	
+	#Affichage du résultat
+	écrire ("Le temps de cuisson pour une viande " & modeCuisson " est de " & temps_de_cuisson " secondes."
+Fin	
+
+# Fonction qui calcule le coefficient
+Fonction calculCoeff(cuisson: entier, viande : entier) Retourne réel
+Variable coef : réel <- 0.0
+Constante BOEUF_BLEU : réel <-10/500
+Constante BOEUF_A_POINT : réel <- 17/500
+Constante BOEUF_BIEN_CUIT : réel <- 25/500
+Constante AGNEAU_BLEU : réel <- 15/400
+Constante AGNEAU_A_POINT : réel <- 25/400
+Constante AGNEAU_BIEN_CUIT : réel <- 40/400
+
+Début
+Si viande = BOEUF
+		Alors Selon cuisson
+			cas "bleu" : coef <- BOEUF_BLEU
+			cas "a point" : coef <- BOEUF_A_POINT
+			cas "bien cuit" : coef <- BOEUF_BIEN_CUIT
+			autre : écrire <- "erreur de saisie"
+			 
+		FSelon
+	Sinon Si viande = AGNEAU
+		Alors Selon 
+			cas "bleu" : coef <- AGNEAU_BLEU
+			cas "a point" : coef <- AGNEAU_A_POINT
+			cas "bien cuit" : coef <- AGNEAU_BIEN_CUIT
+			autre : écrire <- "erreur de saisie"
+		FSelon
+	Sinon
+		écrire : <- "erreur de saisie"
+	FSi
+	Retourne coef
+Fin
+
+	

@@ -1,0 +1,32 @@
+Algo nom_du_mois
+#écrire le nom du mois
+
+	#bloc de déclaration
+	Variable numero_du_mois : entier <- 1
+	
+Début
+	#saisie de l'utilisateur
+	mois <- saisir("Tapez le numéro d'un mois entre 1 et 12")
+	
+	#début du programme
+	Selon mois
+		cas 1 : mois <- "Janvier"
+		cas 2 : mois <- "Février"	
+		cas 3 : mois <- "Mars"
+		cas 4 : mois <- "Avril"
+		cas 5 : mois <- "Mai"
+		cas 6 : mois <- "Juin"
+		cas 7 : mois <- "Juillet"
+		cas 8 : mois <- "Août"		
+		cas 9 : mois <- "Septembre"	
+		cas 10 : mois <- "Octobre"
+		cas 11 : mois <- "Novembre"	
+		cas 12 : mois <- "Décembre"
+		autre 
+			écrire ("Saisie non valide")
+	FSelon	
+	
+	#affichage du résultat
+		écrire (mois)
+Fin 
+

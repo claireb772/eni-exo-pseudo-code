@@ -1,0 +1,321 @@
+#Affiche un bulletin de paie simplifié ainsi que des statistiques sur la totalité des bulletins de paie saisis
+Algo bulletin_de_paie
+
+#bloc de déclaration des variables et constantes
+#Variables concernant la saisie de l'utilisateur
+Constante AGENT_DE_SERVICE : entier <- 1
+Constante EMPLOYE_BUREAU : entier <- 2
+Constante CADRE : entier <- 3
+Variable nom_employe : texte <- ""
+Variable prenom_employe : texte <-""
+Variable statut_employe : entier <- 1
+Variable nombre_heures : réel <- 0.0
+Variable taux_horaire : réel <- 0.0
+
+#Variables concernant le calcul des heures et heures suplémentaires
+Constante HEURES_NORMALES : réel <- 169.0
+Constante HEURES_MAJORE_50 : réel <- 180.0
+Constante MAJORATION_50 : réel <- 50/100
+Constante MAJORATION_60 : réel <- 60/100
+Variable nombre_heures_majo_50 : entier <- 0
+Variable nombre_heures_majo_60 : entier <- 0
+
+#Variable concerntant le calcul du salaire net, brut et net à payer
+Variable salaire_brut : réel <- 0.0
+Variable salaire_net : réel <- 0.0
+Variable salaire_net_a_payer : réel <- 0.0
+
+#Variable concernant les cotisations salariales (taux, montant, total)
+Variable resultat_crds_csgi : réel <- 0.0
+Variable resultat_csg : réel <- 0.0
+Variable resultat_montant_assurance_maladie : réel <- 0.0
+Variable resultat_assurance_vieillesse : réel <- 0.0
+Variable resultat_assurance_chomage : réel <- 0.0
+Variable resultat_retraite_complementaire : réel <- 0.0
+Variable resultat_AGFF : réel <- 0.0
+Variable total_cotisation_salariale : réel <- 0.0
+
+Variable prime_familiale : entier <-0
+
+#Variable pour les statistiques cumulants toutes les bulletins de paie saisis
+Variable masse_salariale : entier <-0
+Variable nombre_salaire_traite : entier <-0
+Variable salaire_traite : entier <-0
+Variable total_prime : réel <-0.0
+Variable moyenne_des_salaires : réel <-0.0
+Variable total_des_cotisations_tout_salaries : réel <-0.0
+
+#tableau qui contient le salaire brut, le calcul des heures majorée à 50 et 60%
+Variable tableau_salaire_heures_majoree : réel [3]
+
+#tableau qui contient les taux de cotisations, les montants des cotisations, le total des montants et le total des taux
+Variable resultat_tableau_de_cotisation : réel [2][8] <-0.0
+
+#
+#Début du programme
+#
+Début
+	#bloc de saisie
+	#Amorce de la boucle Tant que. L'utilisateur doit saisir un nom ou peut quitter le programme en tapant Entrée
+	nom_employe <- saisir("Veuillez saisir votre nom ou tapez [Entree] pour quitter")
+	TantQue nom_employe <>ENTREE
+		prenom_employe <- saisir("Votre prénom ?")
+			
+		#	
+		#controle de la saisie du statut de l'employé	
+		#
+		Répéter
+			écrire ("Statut ?") 
+			écrire (& AGENT_DE_SERVICE & "-Agent de service")
+			écrire (& EMPLOYE_BUREAU & "-Employé de bureau")
+			écrire (& CADRE & "-Cadre")  
+			saisir <- ()
+				Si statut <> AGENT et statut <> EMPLOYE et statut <> CADRE Alors
+				écrire("erreur de saisie")
+				FSi
+		TantQue statut_employe <> AGENT_DE_SERVICE et statut_employe <> EMPLOYE_BUREAU et statut_employe <> CADRE FRépéter
+		
+		#
+		#Récupération de la saisie du nombre d'heures via une fonction
+		#
+		nombre_heures <- demande_nombre_heures_travaillees ()
+		
+		#
+		#Récupération de la saisie du nombre d'enfant via une fonction
+		#
+		nombre_enfant <- demande_nombre_d_enfant()
+		
+		#
+		#Récupération de la saisie du taux horaire via une fonction
+		#	
+		taux_horaire <- demande_du_taux_horaire()
+
+		#
+		#bloc de calcul
+		#	
+			#Calcul salaire brut géré par une fonction et récupération des données du tableau en les affectant à des variables
+			tableau_salaire_heures_majoree[] <- calcul_salaire_brut (nombre_heures, taux_horaire)
+			
+			nombre_heures_majo_50 <-tableau_salaire_heures_majoree[0]
+			nombre_heures_majo_60 <- tableau_salaire_heures_majoree[1]
+			salaire_brut <- tableau_salaire_heures_majoree[2]
+
+			#Calcul des cotisations	avec l'aide d'une fonction qui retourne un tableau avec les montants et les taux de cotisations, le total des montants et le pourcentage de cotisations
+			resultat_tableau_de_cotisation [][] <- calcul_cotisation (salaire_brut)		
+				
+			#Total des cotisations et incrémentation du total des cotisations tous salariés
+			total_cotisation_salariale <- resultat_tableau_de_cotisation [1][7]
+			total_des_cotisations_tout_salaries <- total_des_cotisations_tout_salaries + total_cotisation_salariale
+			
+			#calcul du salaire net
+			salaire_net <- calcul_salaire_net(salaire_brut - total_cotisation_salariale)
+			nombre_salaire_traite <-salaire_traite + 1
+				
+			#calcul de la prime familiale voir fonction
+			prime_familiale <- calcul_prime_familiale(nombre_enfant)
+			total_prime <- total_prime + prime_familiale
+				
+			#calcul du salaire net à payer
+			salaire_net_a_payer <- calcul_net_a_payer (salaire_net, prime_familiale)
+			masse_salariale <- masse_salariale + salaire_net_a_payer
+			moyenne_des_salaires <- masse_salariale / nombre_salaire_traite
+			
+		#
+		#bloc d'affichage des résultats
+		#
+			#Bloc d'affichage du bulletin de paie
+			écrire ("Bulletin de " & nom_employe & prenom_employe)
+			écrire ("Statut : " & affiche_Statut)
+			écrire ("Salaire brut :" & salaire_brut (nombre_heures & "sans majoration, " & nombre_heures_majo_50 & " avec une majoration de 50%, " & nombre_heures_majo_60 & " avec une majoration de 60%")
+			écrire ("Calcul des cotisation : ")
+			écrire (" - Contribution pour le remboursement de la dette sociale et contribution sociale généralisée imposable " & salaire_brut "x"  TAUX_CRDS_CSGI & " = " & resultat_crds_csg & " €")
+			écrire (" - Contribution sociale généralisée non imposable " & salaire_brut "x" TAUX_CSG_NON_IMPOSABLE " = " & resultat_csgi & " €")
+			écrire (" - Assurance maladie " & salaire_brut & "x" & TAUX_ASSURANCE_MALADIE & " %" & " = " & resultat_montant_assurance_maladie & " €")
+			écrire (" - Assurance vieillesse " & salaire_brut "x" & TAUX_ASSURANCE_VIEILLESSE & " %" & " = " & resultat_assurance_vieillesse & " €") 
+			écrire (" - Assurance chômage " & salaire_brut "x" & TAUX_ASSURANCE_CHOMAGE & " %" & " = " & resultat_assurance_chomage & " €")
+			écrire (" - Retraite complémentaire (IRCEM) " & salaire_brut & " x " & TAUX_RETRAITE_COMPLEMENTAIRE & " % " & " = " resultat_retraite_complementaire & " €")
+			écrire (" - Cotisation AGFF " & salaire_brut & "x" & TAUX_AGFF & " % " & " = " & resultat_AGFF & " €")
+			écrire ("Total des côtisations salariales : " & total_cotisation_salariale & " €")
+			écrire ("Salaire net : " & salaire_net & " €")
+			écrire ("Prime familiale : " & prime_familiale & " €")
+			écrire ("Salaire net à payer : " &salaire_net_a_payer & " €")
+			
+			#Bloc d'affichage des statistiques
+			écrire ("###################")
+			écrire ("Statistiques")
+			écrire ("Masse salariale : " &masse_salariale)
+			écrire ("Nombre de salaires traités : " &nombre_salaire_traite)
+			écrire ("Total des primes : " &total_prime)
+			écrire ("Moyenne des salaires : " &moyenne_des_salaires)
+			écrire ("Total des côtisations : " &total_des_cotisations_tout_salaries)
+		
+		#Relance
+		nom_employe <- saisir("Veuillez saisir votre nom ou tapez [Entree] pour quitter")
+	FTq
+Fin 
+
+---------------
+#Demande à l'utilisateur de saisir le nombre d'heures travaillées. Le nombre d'heures travaillées doit être strictement positif sinon l'utilisateur est invité à saisir un nouveau nombre
+#Retourne le nombre d'heures travaillées
+Fonction demande_nombre_heures_travaillees Retourne entier
+Variable nombre_heures_travaillees : entier <-0
+Début
+	Répéter
+		nombre_heures_travaillees <- saisir("Nombre d'heures travaillées")
+			Si nombre_heures_travaillees <= 0 Alors
+				écrire ("Erreur de saisie, rentrez vos heures")
+			FSi
+	TantQue nombre_heures_travaillees <= 0 FRépéter
+	Retourne nombre_heures_travaillees
+Fin	
+
+#Demande à l'utilisateur de saisir le nombre d'enfant. Le nombre d'enfant doit être strictement positif sinon l'utilisateur est invité à saisir un nouveau nombre
+#Retourne le nombre d'enfant
+Fonction demande_nombre_d_enfant Retourne entier
+Variable le_nombre_d_enfant : entier <-0
+Début
+	Répéter
+		le_nombre_d_enfant <- saisir ("Nombre d'enfants")
+			Si le_nombre_d_enfant < 0
+				écrire ("Erreur de saisie, le nombre d'enfant doit être positif")
+			FSi
+	TantQue le_nombre_d_enfant < 0 FRépéter
+	Retourne le_nombre_d_enfant
+Fin
+
+#Demande à l'utilisateur de saisir le taux horaire. Le taux horaire doit être strictement positif sinon l'utilisateur est invité à saisir un nouveau taux
+#Retourne le nombre d'enfant
+Fonction demande_du_taux_horaire Retourne réel
+Variable taux_horaire_saisi
+Début
+	Répéter
+		taux_horaire_saisi <- saisir()
+			Si taux_horaire_saisi <=0
+				écrire ("Erreur de saisie, le taux horaire doit être strictement positif")
+			FSi
+	TantQue taux_horaire_saisi <= FRépéter
+	Retourne taux_horaire_saisi
+Fin
+
+
+#Fait le calcul du salaire brut
+#@Param le taux horaire et le nombre d'heures
+#Renvoi le salaire brut
+Fonction calcul_salaire_brut (taux_horaire : réel, nombre_heures : entier) Retourne réel []
+Variable nombre_heures_majo_50 : entier <- 0
+Variable nombre_heures_majo_60 : entier <- 0
+Variable salaire_brut : réel
+Variable donnees : réel [3] <-0
+
+Début
+	Si nombre_heures <= HEURES_NORMALES Alors
+	 salaire_brut <- nombre_heures * taux_horaire
+		Sinon Si
+			nombre_heures <= HEURES_MAJORE_50 Alors
+				nombre_heures_majo_50 <- nombre_heures - HEURES_NORMALES
+				salaire_brut <- (HEURES_NORMALES * taux_horaire) + nombre_heures_majo_50 * MAJORATION_50
+			Sinon
+				nombre_heures_majo_50 <- nombre_heures - HEURES_NORMALES
+				nombre_heures_majo_60 <- nombre_heures - nombre_heures_majo_50
+				salaire_brut <- (HEURES_NORMALES * taux_horaire) + (nombre_heures_majo_50 * MAJORATION_50)) + ( nombre_heures_majo_60 * taux_horaire * MAJORATION_60))
+		FSi
+	FSi	
+	donnees [0] <-nombre_heures_majo_50
+	donnees [1] <- nombre_heures_majo_60
+	donnees [2] <- salaire_brut
+	
+	Retourne donnees
+Fin
+
+
+#Fait le calcul de la prime familiale
+#@Param nombre d'enfant
+#Renvoi la prime familiale
+Fonction calcul_prime_familiale (nombre_enfant : entier) Retourne entier
+	Constante PRIME_UN_ENFANT : entier <- 20 
+	Constante PRIME_DEUX_ENFANTS : entier <- 70
+	Variable prime_familiale : entier <- 0
+
+Début
+	Si nombre_enfant = 1 Alors
+			prime_familiale <- PRIME_UN_ENFANT
+		Sinon
+			Si nombre_enfant = 2 Alors
+				prime_familiale <- PRIME_DEUX_ENFANTS
+			Sinon
+				Si nombre_enfant < 2 Alors
+					prime_familiale <- PRIME_DEUX_ENFANTS + PRIME_UN_ENFANT * (nombre_enfant - 2)
+					Sinon
+
+				FSi		
+			FSi	
+		FSi
+	Retourne prime_familiale
+Fin
+
+
+#Alimente un tableau avec les taux de cotisations, les montants correspondant à enlever du salaire ainsi que le total des montants et le pourcentage total de cotisations
+#@Param le salaire brut
+#Renvoi le tableau rempli
+Fonction calcul_cotisation (salaire_brut) Retourne réel [][]
+	Constante TAUX_CSG_NON_IMPOSABLE : réel <- 6.15 #exprimé en % 
+	Constante TAUX_CRDS_CSGI : réel <- 3.49 #exprimé en % 
+	Constante TAUX_ASSURANCE_MALADIE : réel <- 0.95 #exprimé en %
+	Constante TAUX_ASSURANCE_VIEILLESSE : réel <- 8.44 #exprimé en %
+	Constante TAUX_ASSURANCE_CHOMAGE : réel <- 3.05 #exprimé en %
+	Constante TAUX_RETRAITE_COMPLEMENTAIRE : réel <- 3.81 #exprimé en %
+	Constante TAUX_AGFF : réel <- 1.02 #exprimé en %
+
+	#Concerne le tableau
+	Variable tableau_de_cotisation : réel [2][8]
+	Constante TAUX_INDEX : entier <- 0
+	Constante MONTANT_INDEX : entier <- 1
+
+	Variable total_montant_cotisation : réel <-0.0
+	Variable pourcentage_total_des_cotisations : réel <-0.0
+
+Début
+	tableau_de_cotisation [TAUX_INDEX][0]<- TAUX_CRDS_CSGI
+	tableau_de_cotisation [TAUX_INDEX][1]<- TAUX_CSG_NON_IMPOSABLE
+	tableau_de_cotisation [TAUX_INDEX][2]<- TAUX_ASSURANCE_MALADIE
+	tableau_de_cotisation [TAUX_INDEX][3]<- TAUX_ASSURANCE_VIEILLESSE 
+	tableau_de_cotisation [TAUX_INDEX][4]<- TAUX_ASSURANCE_CHOMAGE
+	tableau_de_cotisation [TAUX_INDEX][5]<- TAUX_RETRAITE_COMPLEMENTAIRE
+	tableau_de_cotisation [TAUX_INDEX][6]<- TAUX_AGFF
+	tableau_de_cotisation [TAUX_INDEX][7]<- 0.0 #total du taux de cotisation
+	
+	Pour i <-0 à 6
+		tableau_de_cotisation [MONTANT_INDEX][i]<- tableau_de_cotisation [TAUX_INDEX][i] * salaire_brut
+		total_montant_cotisation <- total_montant_cotisation + tableau_de_cotisation [MONTANT_INDEX][i]
+	FPour
+		pourcentage_total_des_cotisations <- total_montant_cotisation*100 / salaire_brut
+	
+	tableau_de_cotisation [MONTANT_INDEX][7]<- total_montant_cotisation
+	tableau_de_cotisation [TAUX_INDEX][7] <- pourcentage_total_des_cotisations
+	
+	Retourne tableau_de_cotisation [MONTANT_INDEX][7]
+Fin
+
+		
+#Fait le calcul du salaire net
+#@Param salaire brut et le total des cotisations salariales
+#Renvoi le salaire net
+Fonction calcul_salaire_net (salaire_brut : réel, total_cotisation_salariale : réel) Retourne réel
+	Variable salaire_net : réel <-0.0
+
+Début
+	salaire_net <- salaire_brut - total_cotisation_salariale
+	Retourne salaire_net
+Fin
+						
+#Fait le calcul du net à payer
+#@Param le salaire net et la prime familiale
+#Renvoi le salaire net à payer
+Fonction calcul_net_a_payer (salaire_net : réel, prime_familiale : réel) Retourne réel					
+Variable salaire_net_a_payer : réel <-0.0
+
+Début
+	salaire_net_a_payer <- salaire_net + prime_familiale
+	Retourne salaire_net_a_payer
+Fin
+

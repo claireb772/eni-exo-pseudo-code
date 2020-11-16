@@ -1,0 +1,27 @@
+Algo meteo
+
+#Bloc de déclaration
+Constante VERGLAS : entier <- 2
+Constante PAS_CHAUD : entier <- 15
+Constante BONNE_TEMPERATURE : entier <- 30
+Variable temperature_actuelle : entier
+
+Début
+	#saisie de la temperature
+	temperature_actuelle <- saisir("Quelle est la température actuelle ?")
+	
+	#début du programme
+	Si temperature_actuelle < VERGLAS
+		Alors écrire ("risque de verglas")
+	Sinon
+		Si temperature_actuelle < PAS_CHAUD
+			Alors écrire ("C'est pas chaud")
+		Sinon 
+			Si temperature_actuelle < BONNE_TEMPERATURE
+				Alors écrire ("Bonne température")
+			Sinon
+				écrire ("Trop chaud !")
+			Fsi
+		Fsi
+	Fsi	
+Fin

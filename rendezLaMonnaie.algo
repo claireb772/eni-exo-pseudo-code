@@ -1,0 +1,93 @@
+Algo rendez_la_monnaie
+
+Constante PRIX_CAFE : réel <- 0.60
+Variable crédit : réel <- 0.0
+Variable monnaie : réel <-0.0
+Variable nombre_de_pieces : entier <-0
+Variable nombre_de_pieces_de_cinq_centimes : entier <-0
+Variable nombre_de_pieces_de_dix_centimes : entier <-0
+Variable nombre_de_pieces_de_ving_centimes : entier <-0
+Variable nombre_de_pieces_de_cinquante_centimes : entier <- 0
+Variable nombre_de_pieces_de_un_euros : entier <-0
+Variable nombre_de_pieces_de_deux_euros : entier <- 0
+
+
+#début du programme
+Début
+
+	#bloc de saisie
+
+		 
+		écrire("Entrez la valeur de la pièce (pièces acceptée 2, 1, 0.5, 0.2, 0.1 et 0.05") 
+		Répéter
+		saisie <-saisie ()
+			Selon saisie
+			cas 2; 1; 0,5; 0,1; 0,05
+				crédit <- crédit + saisie
+				Selon
+					cas 2 : nombre_de_pieces_de_deux_euros <- nombre_de_pieces_de_deux_euros + 1
+							nombre_de_pieces <- nombre_de_pieces + 1
+					cas 1 : nombre_de_pieces_de_un_euros <- nombre_de_pieces_de_un_euros + 1
+							nombre_de_pieces <- nombre_de_pieces + 1
+					cas 0,5 : nombre_de_pieces_de_cinquante_centimes <- nombre_de_pieces_de_cinquante_centimes + 1
+							  nombre_de_pieces <- nombre_de_pieces + 1
+					cas 0,2 : nombre_de_pieces_de_ving_centimes <- nombre_de_pieces_de_ving_centimes + 1
+							  nombre_de_pieces <- nombre_de_pieces + 1
+					cas : 0,1 : nombre_de_pieces_de_dix_centimes <- nombre_de_pieces_de_dix_centimes + 1
+								nombre_de_pieces <- nombre_de_pieces + 1
+					cas : 0,05 : nombre_de_pieces_de_cinq_centimes <- nombre_de_pieces_de_cinq_centimes + 1
+								 nombre_de_pieces <- nombre_de_pieces + 1
+				FSelon 
+				Si crédit < PRIX_CAFE Alors
+					écrire ("Crédit insufisant (" & crédit & "€" / & PRIX_CAFE & "€")		
+				FSi
+			autre 
+			écrire ("Pièces non acceptée, entrez une autre pièce")
+			FSelon
+		TantQue crédit < PRIX_CAFE FRépéter
+		
+	écrire ("Voici votre café et votre monnaie (" & monnaie & "€")
+	
+	#calcul de la monnaie
+		
+	monnaie <- crédit - PRIX_CAFE	
+	
+	#Rendu de la monnaie
+	
+		TantQue monnaie >=1 et nombre_de_pieces_de_un_euros >= 1
+			nombre_de_pieces <- nombre_de_pieces - 1
+			monnaie <- monnaie -1
+			nombre_de_pieces_de_un_euros <- nombre_de_pieces_de_un_euros - 1
+		FTq
+		Si nombre_de_pieces >0 Alors
+			écrire ( &nombre_de_pieces & " pièce(s) de 1€")
+		FSi	
+			
+		TantQue monnaie >=0,5 et nombre_de_pieces >= 0,5
+			nombre_de_pieces <- nombre_de_pieces + 1
+			monnaie <- monnaie -0.5
+			nombre_de_pieces_de_cinquante_centimes <- nombre_de_pieces_de_cinquante_centimes - 1
+		FTq
+		Si nombre_de_pieces >0 Alors
+			écrire ( &nombre_de_pieces & " pièce(s) de 0.5€")
+		FSi	
+		TantQue monnaie >=0,2 et nombre_de_pieces >= 0,2
+			nombre_de_pieces <- nombre_de_pieces + 1
+			monnaie <- monnaie -1
+			nombre_de_pieces_de_cinquante_centimes <- nombre_de_pieces_de_cinquante_centimes - 1
+		FTq
+		Si nombre_de_pieces >0 Alors
+			écrire ( &nombre_de_pieces & " pièce(s) de 0.5€")
+		FSi	
+		
+		
+	
+	
+	
+	#bloc d'affichage
+	
+
+
+
+
+Fin

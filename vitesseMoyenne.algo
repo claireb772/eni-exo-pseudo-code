@@ -1,0 +1,20 @@
+Algo calculer_vitesse_moyenne
+	#calcul la vitesse moyenne en km/h
+
+	#Bloc de déclaration
+	Variable distance_parcourue : réel <- 0.0
+	Variable temps_de_parcours : réel <- 0.0
+	Variable vitesse_moyenne : réel <- 0.0
+	Constante HEURE : entier <- 60
+
+Début
+	#Bloc de saisie des informations
+	distance_parcourue <- saisir("Saisissez la distance parcourue (km) : ")
+	temps_de_parcours <- saisir("Saisissez le temps de parcours en (min) : ")
+	
+	#Bloc de calcul
+	vitesse_moyenne <- distance_parcourue * HEURE / temps_de_parcours
+	
+	#Bloc de résultat
+	écrire ("Vous vous êtes déplacé de " & vitesse_moyenne & "km/h")
+Fin
